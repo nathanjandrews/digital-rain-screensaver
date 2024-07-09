@@ -9,6 +9,9 @@ import Foundation
 import AppKit
 
 class Text {
+    private let FRAMES_BETWEEN_SWAP = 5
+    private var framesWaited = 0;
+    
     private let x: Double;
     private let dimensions: ScreenDimensions
     private let textView = NSTextView()
@@ -24,14 +27,31 @@ class Text {
         self.textView.frame = NSMakeRect(x, 0, Preferences.shared.FONT_SIZE, dimensions.height)
     }
     
-    func animateOneFrame() {}
+    func animateOneFrame() {
+        self.framesWaited += 1
+        if (self.framesWaited == self.FRAMES_BETWEEN_SWAP) {
+            self.swapCharacter()
+            self.framesWaited = 0
+        }
+    }
     
     func draw() {}
+    
+    private func swapCharacter() {
+        let mutableString = NSMutableAttributedString(string: self.textView.string)
+        let randomIndex = Int.random(in: 0..<mutableString.length)
+        mutableString.replaceCharacters(in: NSRange(location: randomIndex, length: 1), with: self.generateRandomCharacter())
+        self.textView.string = mutableString.string
+    }
     
     private func generateTextColumn() -> String {
         return String((0..<self.numCharactersInColumn).map {_ in
             Preferences.shared.CHARACTER_SEED_STRING.randomElement()!
         })
+    }
+    
+    private func generateRandomCharacter() -> String {
+        return String(Preferences.shared.CHARACTER_SEED_STRING.randomElement()!)
     }
     
     var numCharactersInColumn: Int {

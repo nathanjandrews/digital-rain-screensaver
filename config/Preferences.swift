@@ -13,9 +13,9 @@ let PREFERENCES_KEY_PREFIX = "digital-rain-screen-saver-"
 class Preferences {
     @DefaultPreference<Double>(key: "font-size") var FONT_SIZE = 40
     @DefaultPreference<String>(key: "character-seed-string") var CHARACTER_SEED_STRING = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z"
-    @DefaultPreference<Double>(key: "base-rain-speed") var BASE_RAIN_SPEED = 20
+    @DefaultPreference<Double>(key: "base-rain-speed") var BASE_RAIN_SPEED = 10
     @DefaultPreferenceColor(key: "background-color") var BACKGROUND_COLOR = NSColor.black
-    @DefaultPreferenceColor(key: "text-color") var TEXT_COLOR = NSColor.white
+    @DefaultPreferenceColor(key: "text-color") var TEXT_COLOR = NSColor(srgbRed: 3 / 256, green: 160 / 256, blue: 98 / 256, alpha: 1)
     
     static let shared = Preferences()
     
@@ -24,9 +24,9 @@ class Preferences {
     internal func reset() {
         self.FONT_SIZE = 40
         self.CHARACTER_SEED_STRING = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z"
-        self.BASE_RAIN_SPEED = 20
+        self.BASE_RAIN_SPEED = 10
         self.BACKGROUND_COLOR = NSColor.black
-        self.TEXT_COLOR = NSColor.white
+        self.TEXT_COLOR = NSColor(srgbRed: 3 / 256, green: 160 / 256, blue: 98 / 256, alpha: 1)
     }
 }
 
