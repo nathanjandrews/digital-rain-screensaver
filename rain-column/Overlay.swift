@@ -14,18 +14,21 @@ class Overlay {
     private let overlayView = NSView()
     
     private var gradientLayer = CAGradientLayer()
-    private var overlayHeight: Double
+    private var overlayHeight: Double = 0
     private var y: Double
+    private var delta = Preferences.shared.BASE_RAIN_SPEED
     
     init(x: Double, dimensions: ScreenDimensions) {
         self.x = x
         self.dimensions = dimensions
         
-        self.overlayHeight = dimensions.height / 2
         self.y = dimensions.height
         
         self.overlayView.wantsLayer = true
         self.overlayView.layer = CALayer()
+        
+        self.changeDelta()
+        self.changeHeight()
         
         // The cover layer is the opaque rectangle that hides all characters that are not within the bounds
         // of the gradient layer
@@ -52,9 +55,11 @@ class Overlay {
     }
     
     func animateOneFrame() {
-        y -= Preferences.shared.BASE_RAIN_SPEED
+        y -= self.delta
         if (y <= -self.overlayHeight) {
             y = self.dimensions.height + self.overlayHeight
+            self.changeDelta()
+            self.changeHeight()
         }
     }
     
@@ -65,6 +70,20 @@ class Overlay {
         CATransaction.begin()
         CATransaction.setValue(true, forKey: kCATransactionDisableActions)
         self.gradientLayer.position = CGPoint(x: self.x, y: self.y)
+        CATransaction.commit()
+    }
+    
+    func changeDelta() {
+        let extra = Double(Int.random(in: 0..<(2 * Int(Preferences.shared.BASE_RAIN_SPEED))))
+        self.delta = Preferences.shared.BASE_RAIN_SPEED + extra
+    }
+    
+    func changeHeight() {
+        let numCharacters = Int.random(in: 2...6) * 4
+        self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
+        CATransaction.begin()
+        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+        self.gradientLayer.frame.size.height = self.overlayHeight
         CATransaction.commit()
     }
     
