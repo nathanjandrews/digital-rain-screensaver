@@ -23,10 +23,13 @@ class Overlay {
         self.overlayHeight = dimensions.height / 4
         self.y = dimensions.height - self.overlayHeight
         
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [CGColor.init(red: 1, green: 0, blue: 0, alpha: 1), CGColor.init(red: 0, green: 0, blue: 0, alpha: 0)]
+        gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
+        // we don't need to set overlayView.wantsLayer because we are explicitly setting the layer here
+        self.overlayView.layer = gradientLayer
         
-        self.overlayView.wantsLayer = true
-        self.overlayView.layer?.backgroundColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1) // red
-        self.overlayView.frame = NSMakeRect(self.x + Preferences.shared.FONT_SIZE / 2, self.y, Preferences.shared.FONT_SIZE, self.overlayHeight)
+        self.overlayView.frame = NSMakeRect(self.x, self.y, Preferences.shared.FONT_SIZE, self.overlayHeight)
     }
     
     func animateOneFrame() {
@@ -37,7 +40,7 @@ class Overlay {
     }
     
     func draw() {
-        self.overlayView.frame = NSMakeRect(self.x + Preferences.shared.FONT_SIZE / 2, self.y, Preferences.shared.FONT_SIZE, self.overlayHeight)
+        self.overlayView.frame = NSMakeRect(self.x, self.y, Preferences.shared.FONT_SIZE, self.overlayHeight)
     }
     
     var view: NSView {
