@@ -69,7 +69,7 @@ class Overlay {
         // top of the screen.
         CATransaction.begin()
         CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-        self.gradientLayer.position = CGPoint(x: self.x, y: self.y)
+        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
         CATransaction.commit()
     }
     
@@ -83,7 +83,7 @@ class Overlay {
         self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
         CATransaction.begin()
         CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-        self.gradientLayer.frame.size.height = self.overlayHeight
+        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
         CATransaction.commit()
     }
     
