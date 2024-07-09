@@ -12,17 +12,26 @@ class RainColumn {
     
     private let x: Double;
     private let dimensions: ScreenDimensions
+    private let view = NSView()
     private let textView = NSTextView()
+    private let windowView = NSView()
     
     init(x: Double, dimensions: ScreenDimensions) {
         self.x = x;
         self.dimensions = dimensions
         
+        self.textView.wantsLayer = true
         self.textView.string = self.generateTextColumn()
         self.textView.font = NSFont.monospacedSystemFont(ofSize: Preferences.shared.FONT_SIZE, weight: .regular)
-        self.textView.backgroundColor = .black
-        
+        self.textView.backgroundColor = .clear
         self.textView.frame = NSMakeRect(x, 0, Preferences.shared.FONT_SIZE, dimensions.height)
+        
+        self.windowView.wantsLayer = true
+        self.windowView.layer?.backgroundColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1) // red
+        self.windowView.frame = NSMakeRect(x + Preferences.shared.FONT_SIZE / 2, 0, Preferences.shared.FONT_SIZE, dimensions.height)
+        
+        self.view.addSubview(textView)
+        self.view.addSubview(windowView)
         
         textView.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -42,7 +51,7 @@ class RainColumn {
     
     var subview: NSView {
         get {
-            return self.textView
+            return self.view
         }
     }
 }
