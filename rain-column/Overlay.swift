@@ -20,11 +20,20 @@ class Overlay {
         self.x = x
         self.dimensions = dimensions
         
-        self.overlayHeight = dimensions.height / 4
-        self.y = dimensions.height - self.overlayHeight
+        self.overlayHeight = dimensions.height
+        self.y = dimensions.height - 1.5 * self.overlayHeight
         
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [CGColor.init(red: 1, green: 0, blue: 0, alpha: 1), CGColor.init(red: 0, green: 0, blue: 0, alpha: 0)]
+        gradientLayer.colors = [
+            Preferences.shared.BACKGROUND_COLOR.cgColor,
+            NSColor.clear.cgColor,
+            Preferences.shared.BACKGROUND_COLOR.cgColor,
+        ]
+        gradientLayer.locations = [
+            0.4,
+            0.5,
+            0.6
+        ]
         gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
         // we don't need to set overlayView.wantsLayer because we are explicitly setting the layer here
         self.overlayView.layer = gradientLayer
