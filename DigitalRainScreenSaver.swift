@@ -31,7 +31,7 @@ class DigitalRainScreenSaver : ScreenSaverView {
         
         super.animationTimeInterval = 1 / 30
         
-        columns.append(RainColumn(x: 0, dimensions: self.dimensions))
+        columns.append(RainColumn(x: self.dimensions.width / 2, dimensions: self.dimensions))
         
         for column in columns {
             super.addSubview(column.subview)

@@ -18,7 +18,26 @@ class RainColumn {
         self.x = x;
         self.dimensions = dimensions
         
-        self.textView.string = "Hello from RainColumn!"
+        self.textView.string = self.generateTextColumn()
+        self.textView.font = NSFont.monospacedSystemFont(ofSize: Preferences.shared.FONT_SIZE, weight: .regular)
+        self.textView.backgroundColor = .black
+        
+        self.textView.frame = NSMakeRect(x, 0, Preferences.shared.FONT_SIZE, dimensions.height)
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func generateTextColumn() -> String {
+        return String((0..<self.numCharactersInColumn).map {_ in
+            Preferences.shared.CHARACTER_SEED_STRING.randomElement()!
+        })
+    }
+    
+    var numCharactersInColumn: Int {
+        get {
+            return Int(self.dimensions.height / Preferences.shared.FONT_SIZE)
+        }
+        
     }
     
     var subview: NSView {
