@@ -24,6 +24,10 @@ class Text {
         self.textView.frame = NSMakeRect(x, 0, Preferences.shared.FONT_SIZE, dimensions.height)
     }
     
+    func animateOneFrame() {}
+    
+    func draw() {}
+    
     private func generateTextColumn() -> String {
         return String((0..<self.numCharactersInColumn).map {_ in
             Preferences.shared.CHARACTER_SEED_STRING.randomElement()!

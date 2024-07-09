@@ -12,6 +12,7 @@ let PREFERENCES_KEY_PREFIX = "digital-rain-screen-saver-"
 class Preferences {
     @DefaultPreference<Double>(key: "font-size") var FONT_SIZE = 40
     @DefaultPreference<String>(key: "character-seed-string") var CHARACTER_SEED_STRING = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z"
+    @DefaultPreference<Double>(key: "base-rain-speed") var BASE_RAIN_SPEED = 20
     
     static let shared = Preferences()
     
@@ -20,6 +21,7 @@ class Preferences {
     internal func reset() {
         self.FONT_SIZE = 40
         self.CHARACTER_SEED_STRING = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z"
+        self.BASE_RAIN_SPEED = 20
     }
 }
 

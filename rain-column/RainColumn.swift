@@ -28,6 +28,16 @@ class RainColumn {
         
         self.view.translatesAutoresizingMaskIntoConstraints = false;
     }
+    
+    func animateOneFrame() {
+        self.text.animateOneFrame()
+        self.overlay.animateOneFrame()
+    }
+    
+    func draw() {
+        self.text.draw()
+        self.overlay.draw()
+    }
         
     var subview: NSView {
         get {

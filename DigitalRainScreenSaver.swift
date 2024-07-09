@@ -54,7 +54,12 @@ class DigitalRainScreenSaver : ScreenSaverView {
         }
     }
     
-    override func animateOneFrame() {}
+    override func animateOneFrame() {
+        for column in columns {
+            column.animateOneFrame()
+            column.draw()
+        }
+    }
  
     override var hasConfigureSheet: Bool { return false }
     override var configureSheet: NSWindow? { return nil }
