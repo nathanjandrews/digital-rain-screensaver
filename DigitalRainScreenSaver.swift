@@ -9,12 +9,12 @@ import Foundation
 import ScreenSaver
 
 class DigitalRainScreenSaver : ScreenSaverView {
-    private var screenHeight: Double = 0
-    private var screenWidth: Double = 0
-    
-    private let textView = NSTextView()
+    private let dimensions: ScreenDimensions
+    private var columns: Array<RainColumn> = []
     
     override init?(frame: NSRect, isPreview: Bool) {
+        dimensions = ScreenDimensions(width: frame.size.width, height: frame.size.height)
+        
         super.init(frame: frame, isPreview: isPreview)
         
         // Need to subscribe to "willStop" notification to terminate ScreenSaverView instances that
@@ -31,12 +31,11 @@ class DigitalRainScreenSaver : ScreenSaverView {
         
         super.animationTimeInterval = 1 / 30
         
-        self.screenWidth = super.frame.size.width
-        self.screenHeight = super.frame.size.height
+        columns.append(RainColumn(x: 0, dimensions: self.dimensions))
         
-        textView.string = "Hello, World!"
-        
-        super.addSubview(textView)
+        for column in columns {
+            super.addSubview(column.subview)
+        }
     }
     
     required init?(coder: NSCoder) {

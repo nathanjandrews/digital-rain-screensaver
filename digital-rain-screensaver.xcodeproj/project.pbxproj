@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		D89121B92C3CC13800A41386 /* DigitalRainScreenSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */; };
+		D89121BC2C3CC3C900A41386 /* RainColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121BB2C3CC3C900A41386 /* RainColumn.swift */; };
+		D89121C02C3CC67F00A41386 /* ScreenDimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121BF2C3CC67F00A41386 /* ScreenDimensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalRainScreenSaver.swift; sourceTree = "<group>"; };
 		D89121BA2C3CC18500A41386 /* digital-rain-screensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "digital-rain-screensaver.saver"; path = "/Users/nathan/Development/digital-rain-screensaver/build/Debug/digital-rain-screensaver.saver"; sourceTree = "<absolute>"; };
+		D89121BB2C3CC3C900A41386 /* RainColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainColumn.swift; sourceTree = "<group>"; };
+		D89121BF2C3CC67F00A41386 /* ScreenDimensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenDimensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +33,8 @@
 		D891219F2C3CBF1E00A41386 = {
 			isa = PBXGroup;
 			children = (
+				D89121BF2C3CC67F00A41386 /* ScreenDimensions.swift */,
+				D89121BB2C3CC3C900A41386 /* RainColumn.swift */,
 				D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */,
 			);
 			sourceTree = "<group>";
@@ -113,6 +119,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D89121B92C3CC13800A41386 /* DigitalRainScreenSaver.swift in Sources */,
+				D89121BC2C3CC3C900A41386 /* RainColumn.swift in Sources */,
+				D89121C02C3CC67F00A41386 /* ScreenDimensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
