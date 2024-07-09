@@ -31,8 +31,8 @@ class DigitalRainScreenSaver : ScreenSaverView {
         
         super.animationTimeInterval = 1 / 30
         
-        let numColumns = Int(ceil(self.dimensions.width / Preferences.shared.FONT_SIZE))
-        for i in 0..<numColumns {
+//        let numColumns = Int(ceil(self.dimensions.width / Preferences.shared.FONT_SIZE))
+        for i in 0..<1 {
             let column = RainColumn(x: Preferences.shared.FONT_SIZE * Double(i), dimensions: self.dimensions)
             self.columns.append(column)
             super.addSubview(column.subview)

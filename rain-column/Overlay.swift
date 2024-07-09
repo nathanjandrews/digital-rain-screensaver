@@ -22,13 +22,15 @@ class Overlay {
         self.x = x
         self.dimensions = dimensions
         
-        self.y = dimensions.height
+        self.y = dimensions.height / 4
         
         self.overlayView.wantsLayer = true
         self.overlayView.layer = CALayer()
         
         self.changeDelta()
         self.changeHeight()
+        
+        self.overlayHeight = dimensions.height / 2
         
         // The cover layer is the opaque rectangle that hides all characters that are not within the bounds
         // of the gradient layer
@@ -55,12 +57,12 @@ class Overlay {
     }
     
     func animateOneFrame() {
-        y -= self.delta
-        if (y <= -self.overlayHeight) {
-            y = self.dimensions.height + self.overlayHeight
-            self.changeDelta()
-            self.changeHeight()
-        }
+//        y -= self.delta
+//        if (y <= -self.overlayHeight) {
+//            y = self.dimensions.height + self.overlayHeight
+//            self.changeDelta()
+//            self.changeHeight()
+//        }
     }
     
     func draw() {
@@ -74,17 +76,17 @@ class Overlay {
     }
     
     func changeDelta() {
-        let extra = Double(Int.random(in: 0..<(2 * Int(Preferences.shared.BASE_RAIN_SPEED))))
-        self.delta = Preferences.shared.BASE_RAIN_SPEED + extra
+//        let extra = Double(Int.random(in: 0..<(2 * Int(Preferences.shared.BASE_RAIN_SPEED))))
+//        self.delta = Preferences.shared.BASE_RAIN_SPEED + extra
     }
     
     func changeHeight() {
-        let numCharacters = Int.random(in: 2...6) * 4
-        self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
-        CATransaction.begin()
-        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
-        CATransaction.commit()
+//        let numCharacters = Int.random(in: 2...6) * 4
+//        self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
+//        CATransaction.begin()
+//        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+//        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
+//        CATransaction.commit()
     }
     
     var view: NSView {

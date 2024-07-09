@@ -28,11 +28,11 @@ class Text {
     }
     
     func animateOneFrame() {
-        self.framesWaited += 1
-        if (self.framesWaited == self.FRAMES_BETWEEN_SWAP) {
-            self.swapCharacter()
-            self.framesWaited = 0
-        }
+//        self.framesWaited += 1
+//        if (self.framesWaited == self.FRAMES_BETWEEN_SWAP) {
+//            self.swapCharacter()
+//            self.framesWaited = 0
+//        }
     }
     
     func draw() {}
