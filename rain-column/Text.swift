@@ -1,5 +1,5 @@
 //
-//  RainColumn.swift
+//  Text.swift
 //  digital-rain-screensaver
 //
 //  Created by Nathan Andrews on 7/8/24.
@@ -8,16 +8,13 @@
 import Foundation
 import AppKit
 
-class RainColumn {
-    
+class Text {
     private let x: Double;
     private let dimensions: ScreenDimensions
-    private let view = NSView()
     private let textView = NSTextView()
-    private let windowView = NSView()
     
     init(x: Double, dimensions: ScreenDimensions) {
-        self.x = x;
+        self.x = x
         self.dimensions = dimensions
         
         self.textView.wantsLayer = true
@@ -25,15 +22,6 @@ class RainColumn {
         self.textView.font = NSFont.monospacedSystemFont(ofSize: Preferences.shared.FONT_SIZE, weight: .regular)
         self.textView.backgroundColor = .clear
         self.textView.frame = NSMakeRect(x, 0, Preferences.shared.FONT_SIZE, dimensions.height)
-        
-        self.windowView.wantsLayer = true
-        self.windowView.layer?.backgroundColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1) // red
-        self.windowView.frame = NSMakeRect(x + Preferences.shared.FONT_SIZE / 2, 0, Preferences.shared.FONT_SIZE, dimensions.height)
-        
-        self.view.addSubview(textView)
-        self.view.addSubview(windowView)
-        
-        textView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func generateTextColumn() -> String {
@@ -46,12 +34,11 @@ class RainColumn {
         get {
             return Int(self.dimensions.height / Preferences.shared.FONT_SIZE)
         }
-        
     }
     
-    var subview: NSView {
+    var view: NSView {
         get {
-            return self.view
+            return self.textView
         }
     }
 }
