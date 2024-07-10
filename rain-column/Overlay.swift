@@ -58,12 +58,13 @@ class Overlay {
         self.overlayView.layer?.addSublayer(self.gradientLayer)
     }
     
-    func animateOneFrame() {
+    func animateOneFrame(textColumn: Text? = nil) {
         y -= self.delta
         if (y <= -self.overlayHeight) {
             y = self.dimensions.height + self.overlayHeight
             self.changeDelta()
             self.changeHeight()
+            textColumn?.swapTextColumn()
         }
     }
     

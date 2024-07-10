@@ -31,7 +31,7 @@ class RainColumn {
     
     func animateOneFrame() {
         self.text.animateOneFrame()
-        self.overlay.animateOneFrame()
+        self.overlay.animateOneFrame(textColumn: text)
     }
     
     func draw() {

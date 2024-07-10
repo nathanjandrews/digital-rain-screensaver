@@ -24,25 +24,32 @@ class Text {
         self.textView.string = self.generateTextColumn()
         self.textView.font = NSFont.monospacedSystemFont(ofSize: Preferences.shared.FONT_SIZE, weight: .regular)
         self.textView.alignment = .center
+        self.textView.textColor = Preferences.shared.TEXT_COLOR
         self.textView.backgroundColor = .clear
         self.textView.frame = NSMakeRect(x, 0, Preferences.shared.FONT_SIZE, dimensions.height)
     }
     
     func animateOneFrame() {
-//        self.framesWaited += 1
-//        if (self.framesWaited == self.FRAMES_BETWEEN_SWAP) {
-//            self.swapCharacter()
-//            self.framesWaited = 0
-//        }
+        if (!Preferences.shared.DO_CHARACTER_SWAP) {
+            return
+        }
+        
+        self.framesWaited += 1
+        if (self.framesWaited == self.FRAMES_BETWEEN_SWAP) {
+            self.swapCharacter()
+            self.framesWaited = 0
+        }
     }
     
     func draw() {}
     
+    func swapTextColumn() {
+        self.textView.string = self.generateTextColumn()
+    }
+    
     private func swapCharacter() {
-        let mutableString = NSMutableAttributedString(string: self.textView.string)
-        let randomIndex = Int.random(in: 0..<mutableString.length)
-        mutableString.replaceCharacters(in: NSRange(location: randomIndex, length: 1), with: self.generateRandomCharacter())
-        self.textView.string = mutableString.string
+        let randomIndex = Int.random(in: 0..<self.textView.string.count)
+        self.textView.insertText(self.generateRandomCharacter(), replacementRange: NSRange(location: randomIndex, length: 1))
     }
     
     private func generateTextColumn() -> String {
