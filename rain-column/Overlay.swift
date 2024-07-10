@@ -29,7 +29,7 @@ class Overlay {
         self.changeDelta()
         self.changeHeight()
         
-        self.overlayHeight = dimensions.height / 2
+        self.overlayHeight = dimensions.height / 2 // idk why this is necessary but everything breaks if I remove it
         self.y = self.dimensions.height + self.overlayHeight
         
         // The cover layer is the opaque rectangle that hides all characters
@@ -41,15 +41,8 @@ class Overlay {
         
         // the mask layer acts as a window that reveals a portion of the text below the cover layer.
         maskLayer.backgroundColor = NSColor.white.cgColor
-        let path = CGMutablePath()
-        // this subpath is that of the entire rectange
-        path.addRect(CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.dimensions.height))
-        // this subpath is that of the window that should reveal the text
-        path.addRect(CGRect(origin: CGPoint(x: 0, y: self.y), size: CGSize(width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)))
-        path.closeSubpath()
-        maskLayer.path = path
+        self.updateMaskPath()
         maskLayer.fillRule = .evenOdd
-        
         coverLayer.mask = maskLayer
 
         // the gradient layer is adds a gradient over the text revealed by the mask layer to give a fade-out effect
@@ -61,7 +54,7 @@ class Overlay {
                         Preferences.shared.BACKGROUND_COLOR.cgColor,
                     ]
         self.gradientLayer.locations = [0.0, 0.1, 0.9]
-        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE * 2, height: self.overlayHeight)
+        self.updateGradientLayerFrame()
         self.overlayView.layer?.addSublayer(self.gradientLayer)
     }
     
@@ -80,12 +73,8 @@ class Overlay {
         // top of the screen.
         CATransaction.begin()
         CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-        let path = CGMutablePath()
-        path.addRect(CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.dimensions.height))
-        path.addRect(CGRect(origin: CGPoint(x: 0, y: self.y), size: CGSize(width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)))
-        path.closeSubpath()
-        maskLayer.path = path
-        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
+        self.updateMaskPath()
+        self.updateGradientLayerFrame()
         CATransaction.commit()
     }
     
@@ -99,6 +88,12 @@ class Overlay {
         self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
         CATransaction.begin()
         CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+        self.updateMaskPath()
+        self.updateGradientLayerFrame()
+        CATransaction.commit()
+    }
+    
+    func updateMaskPath() {
         let path = CGMutablePath()
         // this subpath is that of the entire rectange
         path.addRect(CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.dimensions.height))
@@ -106,8 +101,10 @@ class Overlay {
         path.addRect(CGRect(origin: CGPoint(x: 0, y: self.y), size: CGSize(width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)))
         path.closeSubpath()
         maskLayer.path = path
+    }
+    
+    func updateGradientLayerFrame() {
         self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
-        CATransaction.commit()
     }
     
     var view: NSView {
