@@ -41,7 +41,7 @@ class DigitalRainScreenSaver : ScreenSaverView {
         }
         
         for column in columns {
-            super.addSubview(column.subview)
+            super.addSubview(column.view)
         }
     }
     

@@ -16,7 +16,7 @@ class Preferences {
     @DefaultPreference<Double>(key: "base-rain-speed") var BASE_RAIN_SPEED = 10
     @DefaultPreferenceColor(key: "background-color") var BACKGROUND_COLOR = NSColor.black
     @DefaultPreferenceColor(key: "text-color") var TEXT_COLOR = NSColor(srgbRed: 3 / 256, green: 160 / 256, blue: 98 / 256, alpha: 1)
-    @DefaultPreference<Bool>(key: "do-character-swap") var DO_CHARACTER_SWAP = false
+    @DefaultPreferenceColor(key: "text-hightlight-color") var TEXT_HIGHLIGHT_COLOR = NSColor.white
     
     static let shared = Preferences()
     
