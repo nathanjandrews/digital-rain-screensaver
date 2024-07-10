@@ -35,25 +35,45 @@ class Overlay {
         // The cover layer is the opaque rectangle that hides all characters that are not within the bounds
         // of the gradient layer
         let coverLayer = CALayer()
-        coverLayer.backgroundColor = Preferences.shared.BACKGROUND_COLOR.cgColor
+        coverLayer.backgroundColor = NSColor.blue.cgColor
         coverLayer.frame = CGRect(x: self.x, y: 0, width: Preferences.shared.FONT_SIZE, height: self.dimensions.height)
         self.overlayView.layer?.addSublayer(coverLayer)
         
-        self.gradientLayer.backgroundColor = Preferences.shared.TEXT_COLOR.cgColor
-        self.gradientLayer.colors = [
-                        Preferences.shared.BACKGROUND_COLOR.cgColor,
-                        NSColor.clear.cgColor,
-                        Preferences.shared.BACKGROUND_COLOR.cgColor,
-                    ]
-        self.gradientLayer.locations = [
-                    0.1,
-                    0.8,
-                    0.9
-                ]
-        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE * 2, height: self.overlayHeight)
-        self.overlayView.layer?.addSublayer(self.gradientLayer)
+        let maskLayer = CAShapeLayer()
+        maskLayer.backgroundColor = NSColor.white.cgColor
+        let path = CGMutablePath()
+        path.addRect(coverLayer.frame)
+        path.addRect(CGRect(x: self.x, y: dimensions.height / 4, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight))
+        maskLayer.path = path
+        maskLayer.fillRule = .evenOdd
         
-        self.overlayView.layer?.compositingFilter = CIFilter(name: "CISourceInCompositing")
+        coverLayer.mask = maskLayer
+
+        
+   
+//        self.gradientLayer.fillRule = .evenOdd
+//        let path = CGMutablePath()
+//        self.gradientLayer.backgroundColor = Preferences.shared.TEXT_COLOR.cgColor
+//        self.gradientLayer.colors = [
+//                        Preferences.shared.BACKGROUND_COLOR.cgColor,
+//                        NSColor.clear.cgColor,
+//                        Preferences.shared.BACKGROUND_COLOR.cgColor,
+//                    ]
+//        self.gradientLayer.locations = [
+//                    0.0,
+//                    0.1,
+//                    0.9
+//                ]
+//        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE * 2, height: self.overlayHeight)
+        
+        
+        
+//        self.overlayView.layer?.addSublayer(coverLayer)
+//        self.overlayView.layer?.addSublayer(self.gradientLayer)
+        
+//        self.overlayView.layer?.mask = gradientLayer
+//        coverLayer.mask = gradientLayer
+//        self.overlayView.layer?.mask = coverLayer
     }
     
     func animateOneFrame() {
@@ -66,13 +86,13 @@ class Overlay {
     }
     
     func draw() {
-        // update the position of the overlay without animating between positions.
-        // this fixes the flickering that happens when we reset the overlay to the
-        // top of the screen.
-        CATransaction.begin()
-        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
-        CATransaction.commit()
+//        // update the position of the overlay without animating between positions.
+//        // this fixes the flickering that happens when we reset the overlay to the
+//        // top of the screen.
+//        CATransaction.begin()
+//        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+//        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
+//        CATransaction.commit()
     }
     
     func changeDelta() {
