@@ -29,8 +29,8 @@ class Overlay {
         self.changeDelta()
         self.changeHeight()
         
-        self.y = dimensions.height / 4
         self.overlayHeight = dimensions.height / 2
+        self.y = self.dimensions.height + self.overlayHeight
         
         // The cover layer is the opaque rectangle that hides all characters
         let coverLayer = CALayer()
@@ -90,17 +90,24 @@ class Overlay {
     }
     
     func changeDelta() {
-//        let extra = Double(Int.random(in: 0..<(2 * Int(Preferences.shared.BASE_RAIN_SPEED))))
-//        self.delta = Preferences.shared.BASE_RAIN_SPEED + extra
+        let extra = Double(Int.random(in: 0..<(2 * Int(Preferences.shared.BASE_RAIN_SPEED))))
+        self.delta = Preferences.shared.BASE_RAIN_SPEED + extra
     }
     
     func changeHeight() {
-//        let numCharacters = Int.random(in: 2...6) * 4
-//        self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
-//        CATransaction.begin()
-//        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-//        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
-//        CATransaction.commit()
+        let numCharacters = Int.random(in: 2...6) * 4
+        self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
+        CATransaction.begin()
+        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+        let path = CGMutablePath()
+        // this subpath is that of the entire rectange
+        path.addRect(CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.dimensions.height))
+        // this subpath is that of the window that should reveal the text
+        path.addRect(CGRect(origin: CGPoint(x: 0, y: self.y), size: CGSize(width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)))
+        path.closeSubpath()
+        maskLayer.path = path
+        self.gradientLayer.frame = CGRect(x: self.x, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
+        CATransaction.commit()
     }
     
     var view: NSView {
