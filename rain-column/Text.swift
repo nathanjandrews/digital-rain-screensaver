@@ -23,6 +23,7 @@ class Text {
         self.textView.wantsLayer = true
         self.textView.string = self.generateTextColumn()
         self.textView.font = NSFont.monospacedSystemFont(ofSize: Preferences.shared.FONT_SIZE, weight: .regular)
+        self.textView.alignment = .center
         self.textView.backgroundColor = .clear
         self.textView.frame = NSMakeRect(x, 0, Preferences.shared.FONT_SIZE, dimensions.height)
     }
