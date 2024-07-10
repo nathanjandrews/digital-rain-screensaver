@@ -8,14 +8,15 @@
 import Foundation
 import AppKit
 
-let PREFERENCES_KEY_PREFIX = "digital-rain-screen-saver-"
+private let PREFERENCES_KEY_PREFIX = "digital-rain-screen-saver-"
 
 class Preferences {
-    @DefaultPreference<Double>(key: "font-size") var FONT_SIZE = 80
+    @DefaultPreference<Double>(key: "font-size") var FONT_SIZE = 40
     @DefaultPreference<String>(key: "character-seed-string") var CHARACTER_SEED_STRING = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z"
     @DefaultPreference<Double>(key: "base-rain-speed") var BASE_RAIN_SPEED = 10
     @DefaultPreferenceColor(key: "background-color") var BACKGROUND_COLOR = NSColor.black
     @DefaultPreferenceColor(key: "text-color") var TEXT_COLOR = NSColor(srgbRed: 3 / 256, green: 160 / 256, blue: 98 / 256, alpha: 1)
+    @DefaultPreference<Bool>(key: "do-character-swap") var DO_CHARACTER_SWAP = false
     
     static let shared = Preferences()
     
