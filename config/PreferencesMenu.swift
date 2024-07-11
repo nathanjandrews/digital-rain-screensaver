@@ -12,6 +12,7 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
     
     let textColorWell = NSColorWell(style: .minimal)
     let highlightColorWell = NSColorWell(style: .minimal)
+    let backgroundColorWell = NSColorWell(style: .minimal)
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,6 +26,7 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         
         mainStack.addView(self.createColorWellStack(colorWell: self.textColorWell, label: "Text Color"), in: .trailing)
         mainStack.addView(self.createColorWellStack(colorWell: self.highlightColorWell, label: "Highlight Text Color"), in: .trailing)
+        mainStack.addView(self.createColorWellStack(colorWell: self.backgroundColorWell, label: "Background Color"), in: .trailing)
         
         let okButton = self.createButton(title: "OK", keyEquivalent: "\r", action: #selector(self.performOk))
         mainStack.addView(okButton, in: .trailing)
@@ -43,11 +45,13 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
     private func savePreferences() {
         Preferences.shared.TEXT_COLOR = textColorWell.color
         Preferences.shared.TEXT_HIGHLIGHT_COLOR = highlightColorWell.color
+        Preferences.shared.BACKGROUND_COLOR = backgroundColorWell.color
     }
     
     private func loadPreferences() {
         textColorWell.color = Preferences.shared.TEXT_COLOR
         highlightColorWell.color = Preferences.shared.TEXT_HIGHLIGHT_COLOR
+        backgroundColorWell.color = Preferences.shared.BACKGROUND_COLOR
     }
     
     private func createColorWellStack(colorWell: NSColorWell, label: String) -> NSStackView {

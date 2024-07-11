@@ -16,13 +16,15 @@ class DigitalRainScreenSaver : ScreenSaverView {
     private let screenHeight: Double
     private var columns: Array<RainColumn> = []
     
-    private lazy var preferencesController = DigitalRainPreferencesController()
+    private let preferencesController = DigitalRainPreferencesController()
     
     override init?(frame: NSRect, isPreview: Bool) {
         self.screenWidth = frame.size.width
         self.screenHeight = frame.size.height
         
         super.init(frame: frame, isPreview: isPreview)
+        
+        super.animationTimeInterval = 1 / 30
         
         // Need to subscribe to "willStop" notification to terminate ScreenSaverView instances that
         // have persisted between invocations of the screen saver. This is hack to get around a bug
@@ -36,10 +38,17 @@ class DigitalRainScreenSaver : ScreenSaverView {
                    object: nil
                )
         
-        super.animationTimeInterval = 1 / 30
+        // Subscribing to notification to update the background color whenever the UserDefaults object updates.
+        NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: nil,
+            queue: nil,
+            using: { _ in  self.updateBackgroundColor() }
+        )
         
-//        columns.append(RainColumn(x: 0, dimensions: dimensions))
-//        columns.append(RainColumn(x: Preferences.shared.FONT_SIZE * 9, dimensions: dimensions))
+        super.wantsLayer = true;
+        super.layer = CALayer()
+        self.updateBackgroundColor()
         
         let numColumns = Int(ceil(self.screenWidth / (isPreview ? PREVIEW_FONT_SIZE : Preferences.shared.FONT_SIZE)))
         let context = ScreenSaverContext(
@@ -79,6 +88,10 @@ class DigitalRainScreenSaver : ScreenSaverView {
             column.animateOneFrame()
             column.draw()
         }
+    }
+    
+    private func updateBackgroundColor() {
+        super.layer?.backgroundColor = Preferences.shared.BACKGROUND_COLOR.cgColor
     }
  
     override var hasConfigureSheet: Bool { return self.configureSheet != nil }
