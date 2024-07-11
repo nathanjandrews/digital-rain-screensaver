@@ -8,6 +8,10 @@
 import Foundation
 import AppKit
 
+private func highlightOdds() -> Bool {
+    return Int.random(in: 1...5) == 1
+}
+
 class RainColumn {
     private let x: Double
     private let dimensions: ScreenDimensions
@@ -19,6 +23,7 @@ class RainColumn {
     private var y: Double = 0
     private var overlayHeight: Double = 0
     private var delta = Preferences.shared.BASE_RAIN_SPEED
+    private var doHighlight = highlightOdds()
     
     private let FRAMES_BETWEEN_SWAPS = 5
     private var framesWaited = 0
@@ -43,7 +48,7 @@ class RainColumn {
         self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular)
         self.textLayer.fontSize = Preferences.shared.FONT_SIZE
         self.textLayer.alignmentMode = .center
-        self.textLayer.foregroundColor = Preferences.shared.TEXT_COLOR.cgColor
+        self.textLayer.foregroundColor = self.doHighlight ? Preferences.shared.TEXT_HIGHLIGHT_COLOR.cgColor : Preferences.shared.TEXT_COLOR.cgColor
         self.textLayer.bounds = CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.dimensions.height)
         self.textLayer.position = CGPoint(x: self.x + (Preferences.shared.FONT_SIZE / 2), y: self.dimensions.height / 2)
         
@@ -71,6 +76,9 @@ class RainColumn {
             self.y = self.dimensions.height + self.overlayHeight
             self.changeDelta()
             self.textLayer.string = self.generateTextColumn()
+            
+            self.doHighlight = highlightOdds()
+            self.updateHighlight()
         }
         
         self.framesWaited += 1
@@ -142,6 +150,18 @@ class RainColumn {
     //------//
     // Misc //
     //------//
+    
+    private func updateHighlight() {
+        if (self.doHighlight) {
+            self.textLayer.foregroundColor = Preferences.shared.TEXT_HIGHLIGHT_COLOR.cgColor
+            self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .bold)
+            self.gradientLayer.locations = [0.01, 0.1, 1]
+        } else {
+            self.textLayer.foregroundColor = Preferences.shared.TEXT_COLOR.cgColor
+            self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular)
+            self.gradientLayer.locations = [0.0, 0.1, 0.9]
+        }
+    }
     
     var view: NSView {
         get {
