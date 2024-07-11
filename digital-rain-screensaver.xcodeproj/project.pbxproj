@@ -9,15 +9,15 @@
 /* Begin PBXBuildFile section */
 		D83840F22C3F57FE00FF0758 /* RainColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83840F12C3F57FE00FF0758 /* RainColumn.swift */; };
 		D89121B92C3CC13800A41386 /* DigitalRainScreenSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */; };
-		D89121C02C3CC67F00A41386 /* ScreenDimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121BF2C3CC67F00A41386 /* ScreenDimensions.swift */; };
+		D89121C02C3CC67F00A41386 /* ScreenSaverContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121BF2C3CC67F00A41386 /* ScreenSaverContext.swift */; };
 		D89121C22C3CC6F100A41386 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121C12C3CC6F100A41386 /* Preferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D83840F12C3F57FE00FF0758 /* RainColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainColumn.swift; sourceTree = "<group>"; };
-		D83840F52C3F642700FF0758 /* digital-rain-screensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "digital-rain-screensaver.saver"; path = "/Users/nathan/Development/digital-rain-screensaver/build/Debug/digital-rain-screensaver.saver"; sourceTree = "<absolute>"; };
+		D83840F62C3F727200FF0758 /* digital-rain-screensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "digital-rain-screensaver.saver"; path = "/Users/nathan/Development/digital-rain-screensaver/build/Debug/digital-rain-screensaver.saver"; sourceTree = "<absolute>"; };
 		D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalRainScreenSaver.swift; sourceTree = "<group>"; };
-		D89121BF2C3CC67F00A41386 /* ScreenDimensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenDimensions.swift; sourceTree = "<group>"; };
+		D89121BF2C3CC67F00A41386 /* ScreenSaverContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenSaverContext.swift; sourceTree = "<group>"; };
 		D89121C12C3CC6F100A41386 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = config/Preferences.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -37,7 +37,7 @@
 			children = (
 				D83840F12C3F57FE00FF0758 /* RainColumn.swift */,
 				D89121C12C3CC6F100A41386 /* Preferences.swift */,
-				D89121BF2C3CC67F00A41386 /* ScreenDimensions.swift */,
+				D89121BF2C3CC67F00A41386 /* ScreenSaverContext.swift */,
 				D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */,
 			);
 			sourceTree = "<group>";
@@ -70,7 +70,7 @@
 			);
 			name = "digital-rain-screensaver";
 			productName = "digital-rain-screensaver";
-			productReference = D83840F52C3F642700FF0758 /* digital-rain-screensaver.saver */;
+			productReference = D83840F62C3F727200FF0758 /* digital-rain-screensaver.saver */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -124,7 +124,7 @@
 				D89121B92C3CC13800A41386 /* DigitalRainScreenSaver.swift in Sources */,
 				D89121C22C3CC6F100A41386 /* Preferences.swift in Sources */,
 				D83840F22C3F57FE00FF0758 /* RainColumn.swift in Sources */,
-				D89121C02C3CC67F00A41386 /* ScreenDimensions.swift in Sources */,
+				D89121C02C3CC67F00A41386 /* ScreenSaverContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

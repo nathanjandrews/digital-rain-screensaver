@@ -14,7 +14,7 @@ private func highlightOdds() -> Bool {
 
 class RainColumn {
     private let x: Double
-    private let dimensions: ScreenDimensions
+    private let context: ScreenSaverContext
     private let _view = NSView()
     
     private let textLayer = CATextLayer()
@@ -28,14 +28,14 @@ class RainColumn {
     private let FRAMES_BETWEEN_SWAPS = 5
     private var framesWaited = 0
     
-    init(x: Double, dimensions: ScreenDimensions) {
+    init(x: Double, context: ScreenSaverContext) {
         self.x = x
-        self.dimensions = dimensions
+        self.context = context
         
         self.changeHeight()
         self.changeDelta()
         
-        self.y = self.dimensions.height + self.overlayHeight
+        self.y = self.context.screenHeight + self.overlayHeight
         
         self._view.wantsLayer = true
         self._view.layer = CALayer()
@@ -49,8 +49,8 @@ class RainColumn {
         self.textLayer.fontSize = Preferences.shared.FONT_SIZE
         self.textLayer.alignmentMode = .center
         self.textLayer.foregroundColor = self.doHighlight ? Preferences.shared.TEXT_HIGHLIGHT_COLOR.cgColor : Preferences.shared.TEXT_COLOR.cgColor
-        self.textLayer.bounds = CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.dimensions.height)
-        self.textLayer.position = CGPoint(x: self.x + (Preferences.shared.FONT_SIZE / 2), y: self.dimensions.height / 2)
+        self.textLayer.bounds = CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.context.screenHeight)
+        self.textLayer.position = CGPoint(x: self.x + (Preferences.shared.FONT_SIZE / 2), y: self.context.screenHeight / 2)
         
         //--------------------------------//
         // Initializing the gradientLayer //
@@ -73,7 +73,7 @@ class RainColumn {
     func animateOneFrame() {
         self.y -= self.delta
         if (self.y <= -self.overlayHeight) {
-            self.y = self.dimensions.height + self.overlayHeight
+            self.y = self.context.screenHeight + self.overlayHeight
             self.changeDelta()
             self.textLayer.string = self.generateTextColumn()
             
@@ -143,7 +143,7 @@ class RainColumn {
     
     var numCharactersInColumn: Int {
         get {
-            return Int(self.dimensions.height / Preferences.shared.FONT_SIZE)
+            return Int(self.context.screenHeight / Preferences.shared.FONT_SIZE)
         }
     }
     
