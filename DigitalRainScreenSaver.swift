@@ -16,6 +16,8 @@ class DigitalRainScreenSaver : ScreenSaverView {
     private let screenHeight: Double
     private var columns: Array<RainColumn> = []
     
+    private lazy var preferencesController = DigitalRainPreferencesController()
+    
     override init?(frame: NSRect, isPreview: Bool) {
         self.screenWidth = frame.size.width
         self.screenHeight = frame.size.height
@@ -79,6 +81,10 @@ class DigitalRainScreenSaver : ScreenSaverView {
         }
     }
  
-    override var hasConfigureSheet: Bool { return false }
-    override var configureSheet: NSWindow? { return nil }
+    override var hasConfigureSheet: Bool { return self.configureSheet != nil }
+    override var configureSheet: NSWindow? {
+        get {
+            return preferencesController.window
+        }
+    }
 }
