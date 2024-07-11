@@ -10,9 +10,11 @@ import Foundation
 class ScreenSaverContext {
     let screenWidth: Double
     let screenHeight: Double
+    let numColumns: Int
     
-    init(screenWidth: Double, screenHeight: Double) {
+    init(screenWidth: Double, screenHeight: Double, numColumns: Int) {
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
+        self.numColumns = numColumns
     }
 }

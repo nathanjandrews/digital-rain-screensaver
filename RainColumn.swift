@@ -13,6 +13,7 @@ private func highlightOdds() -> Bool {
 }
 
 class RainColumn {
+    private let columnIndex: Int
     private let x: Double
     private let context: ScreenSaverContext
     private let _view = NSView()
@@ -28,14 +29,23 @@ class RainColumn {
     private let FRAMES_BETWEEN_SWAPS = 5
     private var framesWaited = 0
     
-    init(x: Double, context: ScreenSaverContext) {
-        self.x = x
+    init(columnIndex: Int, context: ScreenSaverContext) {
+        self.columnIndex = columnIndex
+        self.x = Double(columnIndex) * Preferences.shared.FONT_SIZE
         self.context = context
         
         self.changeHeight()
         self.changeDelta()
         
-        self.y = self.context.screenHeight + self.overlayHeight
+        // restrict the first drop so the middle column always drops first before the rest
+        let isMiddleColumn = context.numColumns / 2 == self.columnIndex
+        if (isMiddleColumn) {
+            self.changeHeight(percentage: 1)
+            self.changeDelta(percentage: 1.5)
+            self.y = self.context.screenHeight + self.overlayHeight
+        } else {
+            self.y = self.context.screenHeight + self.overlayHeight + self.randomHeightOffset() + 800
+        }
         
         self._view.wantsLayer = true
         self._view.layer = CALayer()
@@ -73,7 +83,7 @@ class RainColumn {
     func animateOneFrame() {
         self.y -= self.delta
         if (self.y <= -self.overlayHeight) {
-            self.y = self.context.screenHeight + self.overlayHeight
+            self.y = self.context.screenHeight + self.overlayHeight + randomHeightOffset()
             self.changeDelta()
             self.textLayer.string = self.generateTextColumn()
             
@@ -103,13 +113,24 @@ class RainColumn {
     //-----------------------------------------------------------//
     
     private func changeDelta() {
-        let extra = Double(Int.random(in: 0..<(2 * Int(Preferences.shared.BASE_RAIN_SPEED))))
-        self.delta = Preferences.shared.BASE_RAIN_SPEED + extra
+        self.changeDelta(percentage: Double.random(in: 0...1.5))
+    }
+    
+    private func changeDelta(percentage: Double) {
+        self.delta = Preferences.shared.BASE_RAIN_SPEED * (1 + percentage)
+    }
+    
+    private func randomHeightOffset() -> Double {
+        return Double(Int.random(in: 4...10) * 100)
     }
     
     private func changeHeight() {
-        let numCharacters = Int.random(in: 2...6) * 4
-        self.overlayHeight = Preferences.shared.FONT_SIZE * Double(numCharacters)
+        let randomPercentage = Double(Int.random(in: 6...16)) / 20
+        self.changeHeight(percentage: randomPercentage)
+    }
+    
+    private func changeHeight(percentage: Double) {
+        self.overlayHeight = self.context.screenHeight * percentage
         CATransaction.begin()
         CATransaction.setValue(true, forKey: kCATransactionDisableActions)
         self.updateGradientLayerFrame()
@@ -155,11 +176,9 @@ class RainColumn {
         if (self.doHighlight) {
             self.textLayer.foregroundColor = Preferences.shared.TEXT_HIGHLIGHT_COLOR.cgColor
             self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .bold)
-            self.gradientLayer.locations = [0.01, 0.1, 1]
         } else {
             self.textLayer.foregroundColor = Preferences.shared.TEXT_COLOR.cgColor
             self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular)
-            self.gradientLayer.locations = [0.0, 0.1, 0.9]
         }
     }
     
