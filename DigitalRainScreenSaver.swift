@@ -8,6 +8,9 @@
 import Foundation
 import ScreenSaver
 
+let PREVIEW_FONT_SIZE: Double = 15
+let PREVIEW_DELTA: Double = 3
+
 class DigitalRainScreenSaver : ScreenSaverView {
     private let screenWidth: Double
     private let screenHeight: Double
@@ -36,8 +39,13 @@ class DigitalRainScreenSaver : ScreenSaverView {
 //        columns.append(RainColumn(x: 0, dimensions: dimensions))
 //        columns.append(RainColumn(x: Preferences.shared.FONT_SIZE * 9, dimensions: dimensions))
         
-        let numColumns = Int(ceil(self.screenWidth / Preferences.shared.FONT_SIZE))
-        let context = ScreenSaverContext(screenWidth: self.screenWidth, screenHeight: self.screenHeight, numColumns: numColumns)
+        let numColumns = Int(ceil(self.screenWidth / (isPreview ? PREVIEW_FONT_SIZE : Preferences.shared.FONT_SIZE)))
+        let context = ScreenSaverContext(
+            screenWidth: self.screenWidth,
+            screenHeight: self.screenHeight,
+            numColumns: numColumns,
+            isPreview: isPreview
+        )
         for i in 0..<numColumns {
             let column = RainColumn(columnIndex: i, context: context)
             self.columns.append(column)

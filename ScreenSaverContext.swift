@@ -11,10 +11,12 @@ class ScreenSaverContext {
     let screenWidth: Double
     let screenHeight: Double
     let numColumns: Int
+    let isPreview: Bool
     
-    init(screenWidth: Double, screenHeight: Double, numColumns: Int) {
+    init(screenWidth: Double, screenHeight: Double, numColumns: Int, isPreview: Bool) {
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
         self.numColumns = numColumns
+        self.isPreview = isPreview
     }
 }

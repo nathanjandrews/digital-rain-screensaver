@@ -13,6 +13,9 @@ private func highlightOdds() -> Bool {
 }
 
 class RainColumn {
+    private let FONT_SIZE: Double
+    private let BASE_DELTA: Double
+    
     private let columnIndex: Int
     private let x: Double
     private let context: ScreenSaverContext
@@ -23,30 +26,39 @@ class RainColumn {
     
     private var y: Double = 0
     private var overlayHeight: Double = 0
-    private var delta = Preferences.shared.BASE_RAIN_SPEED
+    private var delta: Double = 0;
     private var doHighlight = highlightOdds()
     
     private let FRAMES_BETWEEN_SWAPS = 5
     private var framesWaited = 0
     
     init(columnIndex: Int, context: ScreenSaverContext) {
+        self.FONT_SIZE = context.isPreview ? PREVIEW_FONT_SIZE : Preferences.shared.FONT_SIZE
+        self.BASE_DELTA = context.isPreview ? PREVIEW_DELTA : Preferences.shared.BASE_RAIN_SPEED
+        
         self.columnIndex = columnIndex
-        self.x = Double(columnIndex) * Preferences.shared.FONT_SIZE
+        self.x = Double(columnIndex) * self.FONT_SIZE
         self.context = context
         
         self.changeHeight()
         self.changeDelta()
         
         // restrict the first drop so the middle column always drops first before the rest
-        let isMiddleColumn = context.numColumns / 2 == self.columnIndex
-        if (isMiddleColumn) {
-            self.changeHeight(percentage: 1)
-            self.changeDelta(percentage: 1.5)
-            self.y = self.context.screenHeight + self.overlayHeight
+        if (!context.isPreview) {
+            let isMiddleColumn = context.numColumns / 2 == self.columnIndex
+            if (isMiddleColumn) {
+                self.changeHeight(percentage: 1)
+                self.changeDelta(percentage: 1.5)
+                self.y = self.context.screenHeight + self.overlayHeight
+            } else {
+                self.y = self.context.screenHeight + self.overlayHeight + self.randomHeightOffset() + 800
+            }
         } else {
-            self.y = self.context.screenHeight + self.overlayHeight + self.randomHeightOffset() + 800
+            // need to set the y value to hide the overlay above the screen if we are in preview mode
+            self.y = self.context.screenHeight + self.overlayHeight + self.randomHeightOffset()
         }
         
+ 
         self._view.wantsLayer = true
         self._view.layer = CALayer()
         
@@ -56,11 +68,11 @@ class RainColumn {
         self.textLayer.string = self.generateTextColumn()
         // 'ofSize' argument has no effect when using NSFont in this context
         self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular)
-        self.textLayer.fontSize = Preferences.shared.FONT_SIZE
+        self.textLayer.fontSize = self.FONT_SIZE
         self.textLayer.alignmentMode = .center
         self.textLayer.foregroundColor = self.doHighlight ? Preferences.shared.TEXT_HIGHLIGHT_COLOR.cgColor : Preferences.shared.TEXT_COLOR.cgColor
-        self.textLayer.bounds = CGRect(x: 0, y: 0, width: Preferences.shared.FONT_SIZE, height: self.context.screenHeight)
-        self.textLayer.position = CGPoint(x: self.x + (Preferences.shared.FONT_SIZE / 2), y: self.context.screenHeight / 2)
+        self.textLayer.bounds = CGRect(x: 0, y: 0, width: self.FONT_SIZE, height: self.context.screenHeight)
+        self.textLayer.position = CGPoint(x: self.x + (self.FONT_SIZE / 2), y: self.context.screenHeight / 2)
         
         //--------------------------------//
         // Initializing the gradientLayer //
@@ -117,11 +129,11 @@ class RainColumn {
     }
     
     private func changeDelta(percentage: Double) {
-        self.delta = Preferences.shared.BASE_RAIN_SPEED * (1 + percentage)
+        self.delta = self.BASE_DELTA * (1 + percentage)
     }
     
     private func randomHeightOffset() -> Double {
-        return Double(Int.random(in: 4...10) * 100)
+        return Double(Int.random(in: 5...12) * Int(self.FONT_SIZE))
     }
     
     private func changeHeight() {
@@ -138,7 +150,7 @@ class RainColumn {
     }
     
     private func updateGradientLayerFrame() {
-        self.gradientLayer.frame = CGRect(x: 0, y: self.y, width: Preferences.shared.FONT_SIZE, height: self.overlayHeight)
+        self.gradientLayer.frame = CGRect(x: 0, y: self.y, width: self.FONT_SIZE, height: self.overlayHeight)
     }
     
     //-----------------------------------------------------//
@@ -164,7 +176,7 @@ class RainColumn {
     
     var numCharactersInColumn: Int {
         get {
-            return Int(self.context.screenHeight / Preferences.shared.FONT_SIZE)
+            return Int(self.context.screenHeight / self.FONT_SIZE)
         }
     }
     
