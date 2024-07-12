@@ -24,18 +24,14 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         let mainStack = NSStackView()
         mainStack.orientation = .vertical
         
-        mainStack.addView(self.createColorWellStack(colorWell: self.textColorWell, label: "Text Color"), in: .trailing)
-        mainStack.addView(self.createColorWellStack(colorWell: self.highlightColorWell, label: "Highlight Text Color"), in: .trailing)
-        mainStack.addView(self.createColorWellStack(colorWell: self.backgroundColorWell, label: "Background Color"), in: .trailing)
+       
+        mainStack.addView(self.createColorWellStack(), in: .trailing)
+        mainStack.addView(self.createButtonStack(), in: .trailing)
+        mainStack.spacing = 25
         
-        let okButton = self.createButton(title: "OK", keyEquivalent: "\r", action: #selector(self.performOk))
-        mainStack.addView(okButton, in: .trailing)
         
-        let cancelButton = self.createButton(title: "Cancel", keyEquivalent: "\u{001B}", action: #selector(self.performCancel))
-        mainStack.addView(cancelButton, in: .trailing)
-        
-        let resetButton = self.createButton(title: "Reset", keyEquivalent: "r", action: #selector(self.performReset))
-        mainStack.addView(resetButton, in: .trailing)
+        mainStack.edgeInsets.top = 16.0
+        mainStack.edgeInsets.bottom = 30.0
         
         self.window?.contentView = mainStack
         
@@ -54,12 +50,44 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         backgroundColorWell.color = Preferences.shared.BACKGROUND_COLOR
     }
     
-    private func createColorWellStack(colorWell: NSColorWell, label: String) -> NSStackView {
-        let stackView = NSStackView()
-        stackView.orientation = .horizontal
-        stackView.addView(self.createLabel(text: label), in: .leading)
-        stackView.addView(colorWell, in: .trailing)
-        return stackView
+    private func createColorWellStack() -> NSStackView {
+        let labelStack = NSStackView()
+        labelStack.orientation = .vertical
+        labelStack.spacing = 15
+        labelStack.addView(self.createLabel(text: "Text Color"), in: .top)
+        labelStack.addView(self.createLabel(text: "Highlight Text Color"), in: .top)
+        labelStack.addView(self.createLabel(text: "Background Color"), in: .top)
+        
+        let colorWellStack = NSStackView()
+        colorWellStack.orientation = .vertical
+        colorWellStack.addView(self.textColorWell, in: .top)
+        colorWellStack.addView(self.highlightColorWell, in: .top)
+        colorWellStack.addView(self.backgroundColorWell, in: .top)
+    
+        let stack = NSStackView()
+        stack.orientation = .horizontal
+        stack.spacing = 20
+        stack.addView(labelStack, in: .leading)
+        stack.addView(colorWellStack, in: .leading)
+        
+        return stack
+    }
+    
+
+    private func createButtonStack() -> NSStackView {
+        let stack = NSStackView()
+        stack.orientation = .horizontal
+        
+        let okButton = self.createButton(title: "OK", keyEquivalent: "\r", action: #selector(self.performOk))
+        stack.addView(okButton, in: .trailing)
+        
+        let resetButton = self.createButton(title: "Reset", keyEquivalent: "r", action: #selector(self.performReset))
+        stack.addView(resetButton, in: .trailing)
+        
+        let cancelButton = self.createButton(title: "Cancel", keyEquivalent: "\u{001B}", action: #selector(self.performCancel))
+        stack.addView(cancelButton, in: .trailing)
+        
+        return stack
     }
     
     private func createLabel(text: String) -> NSTextField {
@@ -82,13 +110,9 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         return button
     }
     
-    
-    
-    
     @objc func performReset() {
         Preferences.shared.reset()
         self.loadPreferences()
-        self.window?.sheetParent?.endSheet(self.window!)
     }
     
     @objc func performCancel() {
