@@ -14,6 +14,7 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
     let highlightColorWell = NSColorWell(style: .minimal)
     let backgroundColorWell = NSColorWell(style: .minimal)
     let seedStringTextField = NSTextField()
+    let fontSizeSlider = NSSlider()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -26,9 +27,10 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         mainStack.orientation = .vertical
         
        
-        mainStack.addView(self.createSeedStringStack(), in: .trailing)
-        mainStack.addView(self.createColorWellStack(), in: .trailing)
-        mainStack.addView(self.createButtonStack(), in: .trailing)
+        mainStack.addView(self.createSeedStringStack(), in: .leading)
+        mainStack.addView(self.createfontSizeSliderStack(), in: .leading)
+        mainStack.addView(self.createColorWellStack(), in: .leading)
+        mainStack.addView(self.createButtonStack(), in: .leading)
         mainStack.spacing = 25
         
         
@@ -45,6 +47,7 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         Preferences.shared.TEXT_HIGHLIGHT_COLOR = highlightColorWell.color
         Preferences.shared.BACKGROUND_COLOR = backgroundColorWell.color
         Preferences.shared.CHARACTER_SEED_STRING = seedStringTextField.stringValue
+        Preferences.shared.FONT_SIZE = fontSizeSlider.doubleValue
     }
     
     private func loadPreferences() {
@@ -52,6 +55,28 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         highlightColorWell.color = Preferences.shared.TEXT_HIGHLIGHT_COLOR
         backgroundColorWell.color = Preferences.shared.BACKGROUND_COLOR
         seedStringTextField.stringValue = Preferences.shared.CHARACTER_SEED_STRING
+        fontSizeSlider.doubleValue = Preferences.shared.FONT_SIZE
+    }
+    
+    private func createfontSizeSliderStack() -> NSStackView {
+        let stack = NSStackView()
+        stack.orientation = .vertical
+        
+        self.fontSizeSlider.minValue = 20
+        self.fontSizeSlider.maxValue = 80
+        self.fontSizeSlider.altIncrementValue = 5
+        self.fontSizeSlider.numberOfTickMarks = Int((self.fontSizeSlider.maxValue - self.fontSizeSlider.minValue) / self.fontSizeSlider.altIncrementValue)
+        self.fontSizeSlider.sliderType = .linear
+        self.fontSizeSlider.allowsTickMarkValuesOnly = true
+        
+        stack.addView(self.createLabel(text: "Font Size"), in: .leading)
+        stack.addView(self.fontSizeSlider, in: .leading)
+        
+        NSLayoutConstraint.activate([
+            self.fontSizeSlider.widthAnchor.constraint(equalToConstant: 320),
+        ])
+        
+        return stack
     }
     
     private func createSeedStringStack() -> NSStackView {
