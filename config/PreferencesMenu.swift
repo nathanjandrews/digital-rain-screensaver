@@ -13,25 +13,27 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
     let textColorWell = NSColorWell(style: .minimal)
     let highlightColorWell = NSColorWell(style: .minimal)
     let backgroundColorWell = NSColorWell(style: .minimal)
+    let seedStringTextField = NSTextField()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
     init() {
-        super.init(window: NSWindow(contentRect: NSMakeRect(0, 0, 320, 200), styleMask: .closable, backing: .buffered, defer: true))
+        super.init(window: NSWindow(contentRect: NSMakeRect(0, 0, 400, 300), styleMask: .closable, backing: .buffered, defer: true))
         
         let mainStack = NSStackView()
         mainStack.orientation = .vertical
         
        
+        mainStack.addView(self.createSeedStringStack(), in: .trailing)
         mainStack.addView(self.createColorWellStack(), in: .trailing)
         mainStack.addView(self.createButtonStack(), in: .trailing)
         mainStack.spacing = 25
         
         
-        mainStack.edgeInsets.top = 16.0
-        mainStack.edgeInsets.bottom = 30.0
+        mainStack.edgeInsets.top = 50
+        mainStack.edgeInsets.bottom = 50.0
         
         self.window?.contentView = mainStack
         
@@ -42,12 +44,33 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         Preferences.shared.TEXT_COLOR = textColorWell.color
         Preferences.shared.TEXT_HIGHLIGHT_COLOR = highlightColorWell.color
         Preferences.shared.BACKGROUND_COLOR = backgroundColorWell.color
+        Preferences.shared.CHARACTER_SEED_STRING = seedStringTextField.stringValue
     }
     
     private func loadPreferences() {
         textColorWell.color = Preferences.shared.TEXT_COLOR
         highlightColorWell.color = Preferences.shared.TEXT_HIGHLIGHT_COLOR
         backgroundColorWell.color = Preferences.shared.BACKGROUND_COLOR
+        seedStringTextField.stringValue = Preferences.shared.CHARACTER_SEED_STRING
+    }
+    
+    private func createSeedStringStack() -> NSStackView {
+        let stack = NSStackView()
+        stack.orientation = .vertical
+        
+        self.seedStringTextField.isEditable = true
+        self.seedStringTextField.isBezeled = true
+        self.seedStringTextField.bezelStyle = .roundedBezel
+        self.seedStringTextField.placeholderString = "Type some characters..."
+
+        stack.addView(self.createLabel(text: "Seed String:"), in: .leading)
+        stack.addView(self.seedStringTextField, in: .leading)
+        
+        NSLayoutConstraint.activate([
+            self.seedStringTextField.widthAnchor.constraint(equalToConstant: 320),
+        ])
+        
+        return stack
     }
     
     private func createColorWellStack() -> NSStackView {
