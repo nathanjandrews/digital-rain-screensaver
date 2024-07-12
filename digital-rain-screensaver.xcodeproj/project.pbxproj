@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D83840F22C3F57FE00FF0758 /* RainColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83840F12C3F57FE00FF0758 /* RainColumn.swift */; };
 		D83840F82C40344400FF0758 /* PreferencesMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83840F72C40344400FF0758 /* PreferencesMenu.swift */; };
+		D83840FA2C40D1B500FF0758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D83840F92C40D1B500FF0758 /* Assets.xcassets */; };
 		D89121B92C3CC13800A41386 /* DigitalRainScreenSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */; };
 		D89121C02C3CC67F00A41386 /* ScreenSaverContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121BF2C3CC67F00A41386 /* ScreenSaverContext.swift */; };
 		D89121C22C3CC6F100A41386 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121C12C3CC6F100A41386 /* Preferences.swift */; };
@@ -18,6 +19,7 @@
 		D83840F12C3F57FE00FF0758 /* RainColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainColumn.swift; sourceTree = "<group>"; };
 		D83840F62C3F727200FF0758 /* digital-rain-screensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "digital-rain-screensaver.saver"; path = "/Users/nathan/Development/digital-rain-screensaver/build/Debug/digital-rain-screensaver.saver"; sourceTree = "<absolute>"; };
 		D83840F72C40344400FF0758 /* PreferencesMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreferencesMenu.swift; path = config/PreferencesMenu.swift; sourceTree = "<group>"; };
+		D83840F92C40D1B500FF0758 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalRainScreenSaver.swift; sourceTree = "<group>"; };
 		D89121BF2C3CC67F00A41386 /* ScreenSaverContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenSaverContext.swift; sourceTree = "<group>"; };
 		D89121C12C3CC6F100A41386 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = config/Preferences.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 				D83840F72C40344400FF0758 /* PreferencesMenu.swift */,
 				D89121BF2C3CC67F00A41386 /* ScreenSaverContext.swift */,
 				D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */,
+				D83840F92C40D1B500FF0758 /* Assets.xcassets */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,6 +117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D83840FA2C40D1B500FF0758 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
