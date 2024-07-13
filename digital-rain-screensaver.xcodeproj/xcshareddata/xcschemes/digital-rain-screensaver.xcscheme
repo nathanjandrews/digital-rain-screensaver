@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D89121A82C3CBF1F00A41386"
-               BuildableName = "digital-rain-screensaver.saver"
+               BuildableName = "Digital Rain.saver"
                BlueprintName = "digital-rain-screensaver"
                ReferencedContainer = "container:digital-rain-screensaver.xcodeproj">
             </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D89121A82C3CBF1F00A41386"
-            BuildableName = "digital-rain-screensaver.saver"
+            BuildableName = "Digital Rain.saver"
             BlueprintName = "digital-rain-screensaver"
             ReferencedContainer = "container:digital-rain-screensaver.xcodeproj">
          </BuildableReference>

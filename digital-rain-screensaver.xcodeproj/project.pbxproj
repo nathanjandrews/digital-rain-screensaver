@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D8119C412C42237100B377A2 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8119C3F2C42237100B377A2 /* Preferences.swift */; };
 		D8119C422C42237100B377A2 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8119C402C42237100B377A2 /* PreferencesController.swift */; };
+		D8119C452C423AF400B377A2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D8119C442C423AF400B377A2 /* README.md */; };
 		D83840F22C3F57FE00FF0758 /* RainColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83840F12C3F57FE00FF0758 /* RainColumn.swift */; };
 		D83840FA2C40D1B500FF0758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D83840F92C40D1B500FF0758 /* Assets.xcassets */; };
 		D89121B92C3CC13800A41386 /* DigitalRainScreenSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */; };
@@ -19,6 +20,7 @@
 		D8119C3C2C420BA000B377A2 /* Digital Rain.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Digital Rain.saver"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8119C3F2C42237100B377A2 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = preferences/Preferences.swift; sourceTree = "<group>"; };
 		D8119C402C42237100B377A2 /* PreferencesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreferencesController.swift; path = preferences/PreferencesController.swift; sourceTree = "<group>"; };
+		D8119C442C423AF400B377A2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D83840F12C3F57FE00FF0758 /* RainColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainColumn.swift; sourceTree = "<group>"; };
 		D83840F92C40D1B500FF0758 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D89121B82C3CC13800A41386 /* DigitalRainScreenSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalRainScreenSaver.swift; sourceTree = "<group>"; };
@@ -40,6 +42,7 @@
 			isa = PBXGroup;
 			children = (
 				D83840F12C3F57FE00FF0758 /* RainColumn.swift */,
+				D8119C442C423AF400B377A2 /* README.md */,
 				D8119C3F2C42237100B377A2 /* Preferences.swift */,
 				D8119C402C42237100B377A2 /* PreferencesController.swift */,
 				D89121BF2C3CC67F00A41386 /* ScreenSaverContext.swift */,
@@ -118,6 +121,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8119C452C423AF400B377A2 /* README.md in Resources */,
 				D83840FA2C40D1B500FF0758 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
