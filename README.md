@@ -1,6 +1,8 @@
 #  Digital Rain Screen Saver for MacOS
 
-This is a custom MacOS screensaver that displays the "digital rain" from the the movie "The Matrix".
+This is a custom MacOS screensaver that displays the "digital rain" from the the movie "The Matrix":
+
+![digital-rain](https://github.com/user-attachments/assets/809386d5-be80-486e-9872-2aa6876a41a3)
 
 ## Acknowledgments
 
