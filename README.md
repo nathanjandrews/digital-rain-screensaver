@@ -25,11 +25,29 @@ release build by either installing the unsigned build or building from source:
    for malicious software. Choose "OK", and then select a different screen
    saver to stop the warning from continuously reappearing.
 
+   <details>
+      <summary>View Image</summary>
+      
+      ![malicious_software_warning](https://github.com/user-attachments/assets/e1ebb98b-673f-4f1a-a3d6-569323f6c47e)
+   </details>
+
 5. Go to the Privacy & Security menu in System Settings, scroll down to Security,
    and click "Open Anyway" under the message about `Digital Rain.saver`.
+
+   <details>
+      <summary>View Image</summary>
+
+      ![open_anyway](https://github.com/user-attachments/assets/873b045c-f382-4226-b4a6-0fecbe5d4b94)
+   </details>
    
 6. Go back to the Screen Saver settings, select the screen saver again, and
    select "OK", which should now be available.
+
+   <details>
+      <summary>View Image</summary>
+
+      ![malicious_software_warning_with_ok](https://github.com/user-attachments/assets/1713d6e0-8841-447b-9d6c-4c43741a3392)
+   </details>
    
 7. That's it!
 
