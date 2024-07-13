@@ -4,9 +4,28 @@ This is a custom MacOS screensaver that displays the "digital rain" from the the
 
 ![digital-rain](https://github.com/user-attachments/assets/809386d5-be80-486e-9872-2aa6876a41a3)
 
+## Customization
+
+You can customize the following features of the screensaver:
+
+- *Seed String*: The set of characters that is used to randomly select
+  characters to the columns of text.
+
+- *Font Size*: The size of characters in a column. This option also
+  affects the number of columns of text. The larger the font, the
+  fewer the columns.
+  
+- *Text Color*: The color of the text in the columns
+
+- *Highlight Text Color*: About 1-in-5 columns are "highlight columns".
+  You can change the color of these highlight columns independently of
+  the other columns
+  
+- *Background Color*: The color of the background behind the text columns.
+
 ## Installation
 
-Release builds are not signed or notarized. That would require enrollment in the
+Release builds are not signed or notarized. That would require enrollment into the
 paid [Apple Developer Program](https://developer.apple.com/support/enrollment),
 which is $99 that I do not want to spend. Nonetheless, you can still install a
 release build by either installing the unsigned build or building from source:
