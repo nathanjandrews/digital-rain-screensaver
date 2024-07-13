@@ -6,6 +6,8 @@ This is a custom MacOS screensaver that displays the "digital rain" from the the
 
 ## Customization
 
+![screensaver_options](https://github.com/user-attachments/assets/cdd2533d-5740-432a-96d4-2c21987dd255)
+
 You can customize the following features of the screensaver:
 
 - *Seed String*: The set of characters that is used to randomly select
