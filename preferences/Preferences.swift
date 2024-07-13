@@ -10,13 +10,17 @@ import AppKit
 
 private let PREFERENCES_KEY_PREFIX = "digital-rain-screen-saver-"
 
+/**
+ * Class for managing user preferences. The singleton instance of this class, `shared`, can be used anywhere in the application.
+ * Setting the fields of this class will update the stored value in the `UserDefaults` database. Getting values from this class
+ */
 class Preferences {
     @DefaultPreference<Double>(key: "font-size") var FONT_SIZE = 40
     @DefaultPreference<String>(key: "character-seed-string") var CHARACTER_SEED_STRING = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z"
     @DefaultPreference<Double>(key: "base-rain-speed") var BASE_RAIN_SPEED = 10
     @DefaultPreferenceColor(key: "background-color") var BACKGROUND_COLOR = NSColor.black
     @DefaultPreferenceColor(key: "text-color") var TEXT_COLOR = NSColor(srgbRed: 3 / 256, green: 160 / 256, blue: 98 / 256, alpha: 1)
-    @DefaultPreferenceColor(key: "text-hightlight-color") var TEXT_HIGHLIGHT_COLOR = NSColor(srgbRed: 73 / 256, green: 252 / 256, blue: 181 / 256, alpha: 1)
+    @DefaultPreferenceColor(key: "text-highlight-color") var TEXT_HIGHLIGHT_COLOR = NSColor(srgbRed: 73 / 256, green: 252 / 256, blue: 181 / 256, alpha: 1)
     
     static let shared = Preferences()
     
@@ -32,6 +36,12 @@ class Preferences {
     }
 }
 
+/**
+ * Property wrapper class specifically for `NSColor` objects. Colors require special care since they are
+ * not a [supported default object](https://developer.apple.com/documentation/foundation/userdefaults/#2926904).
+ * To store a color, we encode the color as an `NSData` instance so that it can be stored. When retrieving the
+ * color, we decode the stored `NSData` to an `NSColor` before returning
+ */
 @propertyWrapper
 private class DefaultPreferenceColor {
     private let userDefaults = UserDefaults.standard
@@ -45,49 +55,25 @@ private class DefaultPreferenceColor {
     
     var wrappedValue: NSColor {
         get {
-            guard let colorString = self.userDefaults.string(forKey: self.key) else { return self.defaultColor }
-            return decodeColor(hexString: colorString)
+            guard let colorData = self.userDefaults.data(forKey: self.key) else { return self.defaultColor }
+            guard let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: colorData) else { return self.defaultColor }
+            return color
         }
         set {
-            let colorString = encodeColor(color: newValue)
-            self.userDefaults.set(colorString, forKey: self.key)
+            guard let colorData = try? NSKeyedArchiver.archivedData(withRootObject: newValue, requiringSecureCoding: false) else {
+                self.userDefaults.set(self.defaultColor, forKey: self.key)
+                return
+            }
+            self.userDefaults.set(colorData, forKey: self.key)
         }
-    }
-    
-    private func encodeColor(color: NSColor) -> String {
-        guard let rgbColor = color.usingColorSpace(.sRGB) else { return "#FFFFFFFF" }
-                
-                let red = Int(rgbColor.redComponent * 255.0)
-                let green = Int(rgbColor.greenComponent * 255.0)
-                let blue = Int(rgbColor.blueComponent * 255.0)
-                let alpha = Int(rgbColor.alphaComponent * 255.0)
-                
-                return String(format: "#%02X%02X%02X%02X", red, green, blue, alpha)
-    }
-    
-    private func decodeColor(hexString: String) -> NSColor {
-        var hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-               if hex.count == 6 {
-                   hex += "FF"
-               }
-               
-        guard hex.count == 8 else { return NSColor.white }
-               
-               var rgb: UInt64 = 0
-               Scanner(string: hex).scanHexInt64(&rgb)
-               
-               let red = CGFloat((rgb >> 24) & 0xFF) / 255.0
-               let green = CGFloat((rgb >> 16) & 0xFF) / 255.0
-               let blue = CGFloat((rgb >> 8) & 0xFF) / 255.0
-               let alpha = CGFloat(rgb & 0xFF) / 255.0
-               
-               return NSColor(srgbRed: red, green: green, blue: blue, alpha: alpha)
     }
 }
 
 /**
  * Property wrapper class that handles setting and getting a value from the UserDefaults database,
  * or the default value if there is no value in the database.
+ *
+ * > :warning: **Warning:** The type parameter `T` must be one of the [supported default types](https://developer.apple.com/documentation/foundation/userdefaults/#2926904).
  */
 @propertyWrapper
 private class DefaultPreference<T> {
@@ -102,12 +88,12 @@ private class DefaultPreference<T> {
     
     var wrappedValue: T {
         get {
-            let retreivedValue = self.userDefaults.object(forKey: self.key)
-            if (retreivedValue == nil) {
+            let retrievedValue = self.userDefaults.object(forKey: self.key)
+            if (retrievedValue == nil) {
                 return defaultValue
             }
             
-            return retreivedValue as! T
+            return retrievedValue as! T
         }
         set {
             self.userDefaults.setValue(newValue, forKey: self.key)

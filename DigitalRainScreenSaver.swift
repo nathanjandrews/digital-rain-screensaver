@@ -11,12 +11,15 @@ import ScreenSaver
 let PREVIEW_FONT_SIZE: Double = 15
 let PREVIEW_DELTA: Double = 3
 
+/**
+ * Entry point for the screen saver application
+ */
 class DigitalRainScreenSaver : ScreenSaverView {
     private let screenWidth: Double
     private let screenHeight: Double
     private var columns: Array<RainColumn> = []
     
-    private let preferencesController = DigitalRainPreferencesController()
+    private let preferencesController = PreferencesController()
     
     override init?(frame: NSRect, isPreview: Bool) {
         self.screenWidth = frame.size.width
@@ -95,6 +98,7 @@ class DigitalRainScreenSaver : ScreenSaverView {
     }
  
     override var hasConfigureSheet: Bool { return self.configureSheet != nil }
+    
     override var configureSheet: NSWindow? {
         get {
             return preferencesController.window

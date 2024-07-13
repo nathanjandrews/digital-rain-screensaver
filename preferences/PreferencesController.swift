@@ -1,5 +1,5 @@
 //
-//  PreferencesMenu.swift
+//  PreferencesController.swift
 //  digital-rain-screensaver
 //
 //  Created by Nathan Andrews on 7/11/24.
@@ -8,7 +8,13 @@
 import Foundation
 import AppKit
 
-class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
+/**
+ * Class responsible for creating the Preferences Menu. This is the window that opens when
+ * the user presses the "Options..." button that appears when the select  the screen saver.
+ * This class handles the appearance of the UI of the window as well as handles updating
+ * the application state when the user changes one of the settings.
+ */
+class PreferencesController : NSWindowController, NSWindowDelegate {
     
     let textColorWell = NSColorWell(style: .minimal)
     let highlightColorWell = NSColorWell(style: .minimal)
@@ -26,16 +32,14 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         let mainStack = NSStackView()
         mainStack.orientation = .vertical
         
-       
         mainStack.addView(self.createSeedStringStack(), in: .leading)
-        mainStack.addView(self.createfontSizeSliderStack(), in: .leading)
+        mainStack.addView(self.createFontSizeSliderStack(), in: .leading)
         mainStack.addView(self.createColorWellStack(), in: .leading)
         mainStack.addView(self.createButtonStack(), in: .leading)
         mainStack.spacing = 25
         
-        
-        mainStack.edgeInsets.top = 50
-        mainStack.edgeInsets.bottom = 50.0
+        mainStack.edgeInsets.top = 40
+        mainStack.edgeInsets.bottom = 40.0
         
         self.window?.contentView = mainStack
         
@@ -58,7 +62,7 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         fontSizeSlider.doubleValue = Preferences.shared.FONT_SIZE
     }
     
-    private func createfontSizeSliderStack() -> NSStackView {
+    private func createFontSizeSliderStack() -> NSStackView {
         let stack = NSStackView()
         stack.orientation = .vertical
         
@@ -154,7 +158,6 @@ class DigitalRainPreferencesController : NSWindowController, NSWindowDelegate {
         button.keyEquivalent = keyEquivalent
         button.bezelStyle = .push
         button.action = action
-        
         return button
     }
     

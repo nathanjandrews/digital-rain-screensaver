@@ -1,5 +1,5 @@
 //
-//  RainColumn2.swift
+//  RainColumn.swift
 //  digital-rain-screensaver
 //
 //  Created by Nathan Andrews on 7/10/24.
@@ -12,15 +12,18 @@ private func highlightOdds() -> Bool {
     return Int.random(in: 1...5) == 1
 }
 
+/**
+ * Handles the state and rendering for a single column of digital rain.
+ */
 class RainColumn {
     private let FONT_SIZE: Double
     private let BASE_DELTA: Double
-    
     private let columnIndex: Int
     private let x: Double
     private let context: ScreenSaverContext
-    private let _view = NSView()
     
+    private let _view = NSView()
+
     private let textLayer = CATextLayer()
     private let gradientLayer = CAGradientLayer()
     
@@ -29,7 +32,6 @@ class RainColumn {
     private var delta: Double = 0;
     private var doHighlight = highlightOdds()
     
-    private let FRAMES_BETWEEN_SWAPS = 5
     private var framesWaited = 0
     
     init(columnIndex: Int, context: ScreenSaverContext) {
@@ -43,8 +45,11 @@ class RainColumn {
         self.changeHeight()
         self.changeDelta()
         
-        // restrict the first drop so the middle column always drops first before the rest
-        if (!context.isPreview) {
+        if (context.isPreview) {
+            self.y = self.context.screenHeight + self.overlayHeight + self.randomHeightOffset()
+        } else {
+            // if not in preview mode, restrict the first drop so
+            // the middle column always drops first before the rest
             let isMiddleColumn = context.numColumns / 2 == self.columnIndex
             if (isMiddleColumn) {
                 self.changeHeight(percentage: 1)
@@ -53,12 +58,8 @@ class RainColumn {
             } else {
                 self.y = self.context.screenHeight + self.overlayHeight + self.randomHeightOffset() + 800
             }
-        } else {
-            // need to set the y value to hide the overlay above the screen if we are in preview mode
-            self.y = self.context.screenHeight + self.overlayHeight + self.randomHeightOffset()
         }
         
- 
         self._view.wantsLayer = true
         self._view.layer = CALayer()
         
@@ -66,7 +67,8 @@ class RainColumn {
         // Initializing the textLayer //
         //----------------------------//
         self.textLayer.string = self.generateTextColumn()
-        // 'ofSize' argument has no effect when using NSFont in this context
+        // 'ofSize' argument has no effect when using NSFont in this context:
+        // https://developer.apple.com/documentation/quartzcore/catextlayer/1515303-font
         self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular)
         self.textLayer.fontSize = self.FONT_SIZE
         self.textLayer.alignmentMode = .center
@@ -88,7 +90,7 @@ class RainColumn {
         //-------------------------------------//
         // Setting relationship between layers //
         //-------------------------------------//
-        self.textLayer.mask = gradientLayer
+        self.textLayer.mask = self.gradientLayer
         self._view.layer?.addSublayer(self.textLayer)
     }
     
@@ -104,7 +106,7 @@ class RainColumn {
         }
         
         self.framesWaited += 1
-        if (self.framesWaited == self.FRAMES_BETWEEN_SWAPS) {
+        if (self.framesWaited == 5) {
             self.swapCharacter()
             self.framesWaited = 0
         }
@@ -157,6 +159,16 @@ class RainColumn {
     // Methods for interacting with the text in the column //
     //-----------------------------------------------------//
     
+    private func updateHighlight() {
+        if (self.doHighlight) {
+            self.textLayer.foregroundColor = Preferences.shared.TEXT_HIGHLIGHT_COLOR.cgColor
+            self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .bold)
+        } else {
+            self.textLayer.foregroundColor = Preferences.shared.TEXT_COLOR.cgColor
+            self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular)
+        }
+    }
+    
     private func swapCharacter() {
         var string = (self.textLayer.string as! String).replacingOccurrences(of: "\n", with: "")
         let randomIndex = string.index(string.startIndex, offsetBy: Int.random(in: 0..<string.count))
@@ -183,16 +195,6 @@ class RainColumn {
     //------//
     // Misc //
     //------//
-    
-    private func updateHighlight() {
-        if (self.doHighlight) {
-            self.textLayer.foregroundColor = Preferences.shared.TEXT_HIGHLIGHT_COLOR.cgColor
-            self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .bold)
-        } else {
-            self.textLayer.foregroundColor = Preferences.shared.TEXT_COLOR.cgColor
-            self.textLayer.font = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular)
-        }
-    }
     
     var view: NSView {
         get {
