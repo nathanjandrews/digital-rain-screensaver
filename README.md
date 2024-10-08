@@ -27,7 +27,7 @@ You can customize the following features of the screensaver:
 
 ## Installation
 
-Release builds are not signed or notarized. That would require enrollment into the
+Release builds are neither signed nor notarized. That would require enrollment into the
 paid [Apple Developer Program](https://developer.apple.com/support/enrollment),
 which is $99 that I do not want to spend. Nonetheless, you can still install a
 release build by either installing the unsigned build or building from source:
