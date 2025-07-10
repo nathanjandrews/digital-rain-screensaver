@@ -27,50 +27,20 @@ You can customize the following features of the screensaver:
 
 ## Installation
 
-Release builds are neither signed nor notarized. That would require enrollment into the
-paid [Apple Developer Program](https://developer.apple.com/support/enrollment),
-which is $99 that I do not want to spend. Nonetheless, you can still install a
-release build by either installing the unsigned build or building from source:
+Originally I was not in the [Apple Developer Program](https://developer.apple.com/support/enrollment),
+which meant that this screen saver could not be singed or notarized. Consequently,
+it was much harder to install the screen saver. As a result, there was a whole
+list of instructions here telling your how to install the unsigned build.
 
-### Installing an Unsigned Build
+Then I caved and paid the $99. Now, there is a much simplier set of instructions:
 
-1. Download a [release build](https://github.com/nathanjandrews/digital-rain-screensaver/releases)
+### Installing a Build
 
-2. Unzip the downloaded file
+1. Download a [release build](https://github.com/nathanjandrews/digital-rain-screensaver/releases).
 
-3. Open `Digital Rain.saver` and follow the prompted installation instructions.
-   You will be taken to the Screen Saver menu of System Settings.
-   
-4. Select the screen saver (it should be in the "Other" section of the listed
-   screen savers). You will be warned that Apple cannot check the screen saver
-   for malicious software. Choose "OK", and then select a different screen
-   saver to stop the warning from continuously reappearing.
+2. Open the downloaded `.zip` file and click "Install".
 
-   <details>
-      <summary>View Image</summary>
-      
-      ![malicious_software_warning](https://github.com/user-attachments/assets/e1ebb98b-673f-4f1a-a3d6-569323f6c47e)
-   </details>
-
-5. Go to the Privacy & Security menu in System Settings, scroll down to Security,
-   and click "Open Anyway" under the message about `Digital Rain.saver`.
-
-   <details>
-      <summary>View Image</summary>
-
-      ![open_anyway](https://github.com/user-attachments/assets/873b045c-f382-4226-b4a6-0fecbe5d4b94)
-   </details>
-   
-6. Go back to the Screen Saver settings, select the screen saver again, and
-   select "OK", which should now be available.
-
-   <details>
-      <summary>View Image</summary>
-
-      ![malicious_software_warning_with_ok](https://github.com/user-attachments/assets/1713d6e0-8841-447b-9d6c-4c43741a3392)
-   </details>
-   
-7. That's it!
+3. That's it.
 
 ### Building from Source
 
